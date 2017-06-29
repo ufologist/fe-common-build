@@ -50,8 +50,8 @@
 
 * 安装 [Node.js](http://nodejs.org/) `6.x`
 * 将 [example](https://github.com/ufologist/fe-common-build/tree/master/example) 目录中的文件复制一份到你的项目中
-
-  `resources` 目录下的示例文件可以不复制, 但需要保留这个目录用于放置前端的静态资源源码
+  * `resources` 目录下的示例文件可以不复制, 但需要保留这个目录用于放置前端的静态资源源码
+  * [resources 目录说明](https://github.com/ufologist/fe-common-build/tree/master/example/resources/README.md)
 * 在你的项目目录下 `npm install`  安装依赖
 
   构建是基于 gulp 的, 因此如果你没有安装 gulp command, 还需要 `npm install gulp-cli -g`

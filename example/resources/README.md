@@ -33,3 +33,13 @@ example/
 |── gulpfile.js        -- 构建脚本
 └── package.json
 ```
+
+## 基于 sourcemap 来调试
+
+调试 JS
+
+![debug-sourcemap-js](https://raw.githubusercontent.com/ufologist/fe-common-build/master/example/resources/index/res/debug-sourcemap-js.png)
+
+调试 SCSS
+
+![debug-sourcemap-scss](https://raw.githubusercontent.com/ufologist/fe-common-build/master/example/resources/index/res/debug-sourcemap-scss.png)
