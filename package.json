@@ -6,8 +6,22 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
-  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ufologist/fe-common-build.git"
+  },
+  "keywords": [
+    "dev",
+    "gulp",
+    "build",
+    "backend"
+  ],
+  "bugs": {
+    "url": "https://github.com/ufologist/fe-common-build/issues"
+  },
+  "homepage": "https://github.com/ufologist/fe-common-build",
+  "author": "Sun",
+  "license": "MIT",
   "dependencies": {
     "autoprefixer": "^7.1.1",
     "babel-core": "^6.25.0",
