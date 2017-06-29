@@ -1,0 +1,6 @@
+$var: 12px;
+// 使用配置路径的方式, 绕开 sass 无法重写 url 的问题
+// sass 文件中的所有路径都采用绝对路径来写
+// url($publicPath + "/res/mod1/mod1.png");
+// 参考: https://stackoverflow.com/questions/41385111/rewriting-sass-url-when-building-project
+$publicPath: "//a.com";
