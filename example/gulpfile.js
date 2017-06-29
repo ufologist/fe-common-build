@@ -1,2 +1,1 @@
-// require('fe-common-build');
-require('../gulpfile.js');
+require('fe-common-build');
