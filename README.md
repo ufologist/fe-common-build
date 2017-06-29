@@ -98,4 +98,6 @@
 
 * [QMUI Web Gulp 工作流](https://github.com/QMUI/QMUI_Web/blob/master/gulpfile.js)
 * [Splitting a gulpfile into multiple files](http://macr.ae/article/splitting-gulpfile-multiple-files.html)
+* [Spreading gulp tasks into multiple files](https://medium.com/@_rywar/spreading-gulp-tasks-into-multiple-files-2f63d8c959d5)
+* [pug-sass-seed](https://github.com/RyanWarner/pug-sass-seed/tree/master/gulp)
 * [前端 | 重构 gulpfile.js](https://segmentfault.com/a/1190000002880177)
