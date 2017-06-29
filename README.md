@@ -53,6 +53,8 @@
 
   `resources` 目录下的示例文件可以不复制, 但需要保留这个目录用于放置前端的静态资源源码
 * 在你的项目目录下 `npm install`  安装依赖
+
+  构建是基于 gulp 的, 因此如果你没有安装 gulp command, 还需要 `npm install gulp-cli -g`
 * 开发时使用 `npm run dev` 执行开发构建
 * 开发完成时 `npm run build` 执行正式构建
 
