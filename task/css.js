@@ -10,7 +10,7 @@ module.exports = function(gulp, buildConfig) {
     // 构建 CSS: sass + postcss
     // 
     // 注意: 由于 SASS 不支持 url rewrite 功能, 即不会重写 css 文件中引用的 url 路径, 例如 background-image
-    // 因此必须确保各个 scss 文件中引用的资源是相当于最终输出的 css 文件
+    // 因此必须确保各个 scss 文件中引用的资源是相对于最终输出的 css 文件
     //
     // 例如: 下面这种情况就会造成最终输出的 main.css 找不到引用的资源,
     // 因为最终 main.css 中的 url 还是 url(res/a.jpg) 和 url(res/b.jpg), 肯定是错的了
@@ -38,6 +38,9 @@ module.exports = function(gulp, buildConfig) {
     // |   |── a.scss
     // |   |── b.scss
     // |   └── main.scss
+    // 
+    // SASS @import and maintaining URLs for images etc
+    // https://github.com/sass/sass/issues/1015
     gulp.task('css:build', function() {
         return gulp.src(buildConfig.src.css, {
                         base: buildConfig.base
