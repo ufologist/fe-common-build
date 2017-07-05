@@ -1,7 +1,6 @@
 # 目录说明
 
-* 入口模块: 在页面中通过 `<link>`/`<script>` 方式直接引用的模块, 以非 `_` (下划线)开头的 SCSS/JS 文件, 会打包构建
-* 子模块: 在入口模版中引用的模块, 以 `_` (下划线)开头的 SCSS/JS 文件, 不会单独打包
+这个目录放置的是前端静态资源的源代码, 需要构建到输出目录, 才能在浏览器中使用
 
 ```
 example/
@@ -34,6 +33,10 @@ example/
 └── package.json
 ```
 
+模块说明
+* 入口模块: 在页面中通过 `<link>`/`<script>` 方式直接引用的模块, 以非 `_` (下划线)开头的 SCSS/JS 文件, 会打包构建
+* 子模块: 在入口模版中引用的模块, 以 `_` (下划线)开头的 SCSS/JS 文件, 不会单独打包
+
 ## 基于 sourcemap 来调试
 
 调试 JS
@@ -43,3 +46,9 @@ example/
 调试 SCSS
 
 ![debug-sourcemap-scss](https://raw.githubusercontent.com/ufologist/fe-common-build/master/example/resources/index/res/debug-sourcemap-scss.png)
+
+## 关于多级 SASS 资源引用的问题
+
+由于 SASS 对于使用 `@import` 进来的 SASS 文件没有重写其他中的资源引用, 即重写 `url()` 引用的路径.
+
+为了规避这个问题, **有资源引用的 SASS 文件, 都统一放置在与入口模块同级的目录**, 因此可以这样放置模块的 scss 文件: `业务/功能模块/模块.scss`, 而不能这样放置: `业务/功能模块/模块/模块.scss`
