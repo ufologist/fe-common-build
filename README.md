@@ -64,7 +64,7 @@
 |---------------------|------|------|
 | npm run dev         | 开发构建     |  会开启监听, 执行开发环境的构建    |
 | npm run build       | 正式构建    |  会先清理构建的结果, 再执行正式环境的构建    |
-| npm run build:css   | 构建 CSS     | 支持参数: `--watch` 是否开启监听, 文件改动后自动再次执行构建; `--env=dev` 指定构建的环境  |
+| npm run build:css   | 构建 CSS     | 支持参数: `--watch` 是否开启监听, 文件改动后自动再次执行构建; `--env=dev` 指定构建的环境. 例如 `npm run build:css -- --env=dev`  |
 | npm run build:js    | 构建 JS     | 支持的参数同 `build:css`   |
 | npm run build:res   | 构建其他静态资源     |  支持的参数同 `build:css`    |
 | npm run build:clean | 清理构建的结果    |      |
@@ -93,6 +93,8 @@
 ## 构建配置
 
 详见 [default-build-config.js](https://github.com/ufologist/fe-common-build/tree/master/default-build-config.js)
+
+如果项目在使用该构建方案时需要覆盖默认配置, 或者新增一些配置, 只需要在项目目录下新建一个 `build-config.js`, 参考 [example/build-config.js](https://github.com/ufologist/fe-common-build/blob/master/example/build-config.js)
 
 ## 注意事项
 
