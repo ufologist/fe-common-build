@@ -12,7 +12,7 @@ var buildConfig = {};
 var hasBuildConfigFile = fs.existsSync('./build-config.js');
 if (hasBuildConfigFile) {
     buildConfig = require(process.cwd() + '/build-config.js');
-    buildConfig = merge.recursive(true, defaultBuildConfig, buildConfig);
+    buildConfig = merge.recursive(defaultBuildConfig, buildConfig);
 } else {
     buildConfig = defaultBuildConfig;
 }
