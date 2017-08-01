@@ -32,7 +32,7 @@ var config = {
             postcss: {
                 plugins: [
                     require('autoprefixer')({
-                        browsers: ['iOS >= 6', 'Android >= 2.1']
+                        browsers: ['iOS >= 6', 'Android >= 4']
                     })
                 ],
                 options: {}
