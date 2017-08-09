@@ -1,5 +1,11 @@
 # CHANGELOG
 
+* v0.2.0 2017-8-9
+
+  * 添加 webpack.HashedModuleIdsPlugin 来产生稳定的模块ID
+  
+    不使用默认的数字来作为模块ID, 通过 hash 的方式产生稳定的模块ID, 这样才能确保每次构建输出的文件内容是相同的.
+
 * v0.1.1 2017-8-1
 
   * [fixbug] 使用 `merge.recursive(true, defaultBuildConfig, buildConfig);` clone 配置项是有问题的

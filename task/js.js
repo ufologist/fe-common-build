@@ -29,7 +29,10 @@ module.exports = function(gulp, buildConfig) {
                 }
             }]
         },
-        plugins: [],
+        plugins: [
+            // 不使用默认的数字来作为模块ID, 通过 hash 的方式产生稳定的模块ID
+            new webpack.HashedModuleIdsPlugin()
+        ],
         devtool: buildConfig.env == 'dev' ? 'source-map' : false
     };
     if (buildConfig.env != 'dev') {
