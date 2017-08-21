@@ -13,7 +13,7 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "devDependencies": {
-    "fe-common-build": "^0.1.0",
+    "fe-common-build": "0.x",
     "npm-run-all": "^4.0.2"
   },
   "author": "Sun",
