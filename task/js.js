@@ -1,6 +1,7 @@
 var path = require('path');
 
 var gulpIf = require('gulp-if');
+var plumber = require('gulp-plumber');
 
 var gulpUtil = require('gulp-util');
 
@@ -49,6 +50,12 @@ module.exports = function(gulp, buildConfig) {
     // 构建 JS: webpack + es2015
     gulp.task('js', function() {
         return gulp.src(buildConfig.src.js)
+                   .pipe(gulpIf(buildConfig.env == 'dev', plumber({ // 正式构建时, 不捕获异常才能让 npm-run-all 终止运行, 以提示构建失败
+                       errorHandler: function(error) {
+                           gulpUtil.beep();
+                           gulpUtil.log(gulpUtil.colors.cyan('Plumber') + gulpUtil.colors.red(' found unhandled error:\n'), error.toString());
+                       }
+                   })))
                    .pipe(named(function(file) {
                        // 将 JS 文件转成按照相对根目录的入口文件
                        // 例如 e:/project 是根目录
@@ -59,12 +66,6 @@ module.exports = function(gulp, buildConfig) {
                        return entryName;
                    }))
                    .pipe(gulpWebpack(webpackConfig, webpack))
-                //    .on('error', function(error) { // 不捕获异常才能让 npm-run-all 终止
-                //         gulpUtil.log('[webpack]:error');
-                //         gulpUtil.log('---------------');
-                //         gulpUtil.log(error.message);
-                //         this.end();
-                //    })
                    .pipe(gulp.dest(buildConfig.dist));
     });
 };

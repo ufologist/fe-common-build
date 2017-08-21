@@ -1,5 +1,11 @@
 # CHANGELOG
 
+* v0.3.0 2017-8-21
+
+  * 在开发模式下使用 gulp-plumber 来捕获错误, 让构建任务不会被终止, 否则一旦有错误发生就需要重启 gulp, 比较麻烦
+  
+    正式构建时, 还是不捕获异常, 因此这样才能让 npm-run-all 终止运行, 以提示构建失败
+
 * v0.2.0 2017-8-9
 
   * 添加 webpack.HashedModuleIdsPlugin 来产生稳定的模块ID

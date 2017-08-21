@@ -1,6 +1,7 @@
 var gulpIf = require('gulp-if');
 var watch = require('gulp-watch');
 var gulpUtil = require('gulp-util');
+var plumber = require('gulp-plumber');
 
 var sourcemaps = require('gulp-sourcemaps');
 var sass = require('gulp-sass');
@@ -51,22 +52,22 @@ module.exports = function(gulp, buildConfig) {
                 // 只好采用 gulp.watch 的方式重新跑整个任务了
                 // https://github.com/dlmanning/gulp-sass/issues/333
                 // .pipe(watch('./**/*.scss', {base: '.'}))
+                .pipe(gulpIf(buildConfig.env == 'dev', plumber({ // 正式构建时, 不捕获异常才能让 npm-run-all 终止运行, 以提示构建失败
+                    errorHandler: function(error) {
+                        gulpUtil.beep();
+                        gulpUtil.log(gulpUtil.colors.cyan('Plumber') + gulpUtil.colors.red(' found unhandled error:\n'), error.toString());
+                        // 使用 plumber 捕获到错误后 watch 没有继续运行了
+                        // Handling errors with gulp watch and gulp-plumber
+                        // http://blog.ibangspacebar.com/handling-errors-with-gulp-watch-and-gulp-plumber/
+                        // If you're using watch, you also need to make sure you call this.emit('end') in the handleError callback to make sure gulp knows when to end the task that errored out, and it will continue to work once you fix the problem and watch calls it again.
+                        // If you don't emit an end event, your error will not cause a crash, but your task will just hang forever and you'll have to re-start the watch process anyway.
+                        this.emit('end');
+                    }
+                })))
                 .pipe(sass(Object.assign({
                     outputStyle: buildConfig.env == 'dev' ? 'expanded' : 'compressed'
                 }, buildConfig.task.css.sass)))
-                // .on('error', function(error) { // 不捕获异常才能让 npm-run-all 终止
-                //     gulpUtil.log('[gulp-sass]:error');
-                //     gulpUtil.log('------------------');
-                //     gulpUtil.log(error.message);
-                //     this.end();
-                // })
                 .pipe(postcss(buildConfig.task.css.postcss.plugins, buildConfig.task.css.postcss.options))
-                // .on('error', function(error) { // 不捕获异常才能让 npm-run-all 终止
-                //     gulpUtil.log('[gulp-postcss]:error');
-                //     gulpUtil.log('------------------');
-                //     gulpUtil.log(error.message);
-                //     this.end();
-                // })
                 .pipe(gulpIf(buildConfig.env == 'dev', sourcemaps.write('.')))
                 .pipe(gulp.dest(buildConfig.dist));
     });
