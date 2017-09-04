@@ -101,6 +101,9 @@
 * `babel-preset-es2015` 会给每个模块添加 `"use strict";` 启用 ECMAScript 5 Strict Mode(ES5严格模式)
 
   因此注意不要写违法[严格模式](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Strict_mode)的代码, 例如不使用 `var` 来声明变量, 让该变量**被提升为一个全局变量**. 启用严格模式可以让我们写出更规范的代码.
+* 如果新增了需要打包的文件, 需要重启构建任务
+
+  例如: 新增了一个 `foo.js`, 构建任务不会识别到这个新增的文件, 必须重启构建任务
 
 ## 参考
 
