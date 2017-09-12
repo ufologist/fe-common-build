@@ -1,4 +1,5 @@
 var path = require('path');
+var fs = require('fs');
 
 var argv = require('yargs').argv;
 var glob = require('glob');
@@ -16,6 +17,10 @@ var inquirer = require('inquirer');
 // * https://github.com/qiu8310/deploy-asset
 var ftp = require( 'vinyl-ftp' );
 var gulpUtil = require('gulp-util');
+var gulpChanged = require('gulp-changed');
+
+// 通过 gulpChanged 只操作修改过的文件, 如果要强制上传所有文件, 可以删掉 TMP_DIR 的目录
+var TMP_DIR = './.tmp';
 
 /**
  * 判断字符串是否以斜杠(/)结尾, 如果没有则自动修复
@@ -115,8 +120,24 @@ function getPromptQuestion(buildConfig, deployEnv) {
     return question;
 }
 
+function hasChangedComparator(stream, sourceFile, targetPath) {
+    return new Promise(function(resolve, reject) {
+        fs.stat(targetPath, function(error, targetStat) {
+            if (sourceFile.stat && sourceFile.stat.mtime > targetStat.mtime) {
+                stream.push(sourceFile);
+            } else { // 发现未修改过的文件
+                sameFileCount += 1;
+                console.info(sameFileCount + ')', '发现未修改过的文件', sourceFile.path, targetPath);
+            }
+
+            resolve();
+        });
+    });
+}
+
 var deployFileCount = 0;
 var uploadedCount = 0;
+var sameFileCount = 0;
 module.exports = function(gulp, buildConfig) {
     gulp.task('deploy', function(done) {
         index = 0;
@@ -158,13 +179,16 @@ module.exports = function(gulp, buildConfig) {
 
                     return gulp.src([deployEnv.__deploy_files__].concat(deployEnv.__ignore_files__), {
                         base: buildConfig.dist,
+                        nodir: true,
                         buffer: false
-                    }).pipe(conn.dest(deployEnv.__ftp_path__).on('end', function() {
+                    }).pipe(gulpChanged(TMP_DIR, {
+                        hasChanged: hasChangedComparator
+                    })).pipe(gulp.dest(TMP_DIR)).pipe(conn.dest(deployEnv.__ftp_path__).on('end', function() {
                            console.info('------------------------------');
-                           gulpUtil.log('部署完成: ' + '需要上传 [' + chalk.yellow.bold(deployFileCount) + '] 个文件' + ', 上传完成 [' + chalk.yellow.bold(uploadedCount) + '] 个文件, 耗时: ' + (Date.now() - startUploadTime) / 1000 + 's');
+                           gulpUtil.log('部署完成: ' + '需要上传 [' + chalk.yellow.bold(deployFileCount) + '] 个文件' + ', 其中有 [' + chalk.yellow.bold(sameFileCount) + '] 个文件未修改过(无需上传), 上传完成 [' + chalk.yellow.bold(uploadedCount) + '] 个文件, 耗时: ' + (Date.now() - startUploadTime) / 1000 + 's');
 
                            done();
-                      }));
+                    }));
                 });
             } else {
                 done();
