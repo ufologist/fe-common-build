@@ -17,13 +17,7 @@ var inquirer = require('inquirer');
 // * https://github.com/qiu8310/deploy-asset
 var ftp = require( 'vinyl-ftp' );
 var gulpUtil = require('gulp-util');
-// https://github.com/corneliusio/gulp-once
-// gulp-once 只会读取每个文件的 hash, 然后保存到一个 JSON 文件中, 下次再做对比
-// 使用这个插件的好处就是不需要将文件生成到一个临时目录了
-// 但也有坏处, 需要改进
-// 1. 没办法提示哪些文件是没有修改过的
-// 2. JSON 中的 KEY 只取了文件名, 冲突的可能性比较高
-var gulpOnce = require('gulp-once');
+var gulpIf = require('gulp-if');
 
 /**
  * 判断字符串是否以斜杠(/)结尾, 如果没有则自动修复
@@ -168,8 +162,8 @@ module.exports = function(gulp, buildConfig) {
                     return gulp.src([deployEnv.__deploy_files__].concat(deployEnv.__ignore_files__), {
                         base: buildConfig.dist,
                         nodir: true,
-                        buffer: true
-                    }).pipe(gulpOnce()).pipe(conn.dest(deployEnv.__ftp_path__).on('end', function() {
+                        buffer: false
+                    }).pipe(gulpIf(deployEnv.__incremental__, conn.newerOrDifferentSize(deployEnv.__ftp_path__))).pipe(conn.dest(deployEnv.__ftp_path__).on('end', function() {
                            console.info('------------------------------');
                            gulpUtil.log('部署完成: ' + '需要上传 [' + chalk.yellow.bold(deployFileCount) + '] 个文件' + ', 上传完成 [' + chalk.yellow.bold(uploadedCount) + '] 个文件, 耗时: ' + (Date.now() - startUploadTime) / 1000 + 's');
 

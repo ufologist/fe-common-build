@@ -95,6 +95,14 @@ var config = {
                     // 从需要部署的文件中排除掉一些文件(支持 glob)
                     __ignore_files__: deployDefaultIgnore,
 
+                    // 是否使用增量上传功能, 只上传修改过的文件
+                    // 增量更新的实现手段:
+                    // 方式一. 对比本地文件(source/dist), 判断是否修改过
+                    //        有漏掉的风险: 当 source/dist 文件已经对比过一次, 但 FTP 上传任务失败时
+                    // 方式二. 对比 FTP 上的文件与本地文件, 判断是否修改过
+                    // 我们这里采用的是方式二
+                    __incremental__: false,
+
                     // ftp 相关配置
                     __ftp_host__: 'ftptest.yourdomain.com',
                     __ftp_port__: 21,
@@ -109,6 +117,8 @@ var config = {
                 prod: { // 正式环境的部署配置
                     __deploy_files__: defaultDeployFiles,
                     __ignore_files__: deployDefaultIgnore,
+
+                    __incremental__: false,
 
                     __ftp_host__: 'ftp.yourdomain.com',
                     __ftp_port__: 21,
