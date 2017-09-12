@@ -65,11 +65,11 @@
 |---------------------|------|------|
 | npm run dev         | 开发构建     |  会开启监听, 执行开发环境的构建    |
 | npm run build       | 正式构建    |  会先清理构建的结果, 再执行正式环境的构建    |
-| npm run build:css   | 构建 CSS     | 支持参数: <br>`--watch` 是否开启监听, 文件改动后自动再次执行构建;<br>`--env=dev` 指定构建的环境;<br>例如 `npm run build:css -- --env=dev`  |
+| npm run build:css   | 构建 CSS     | 支持参数: <ul><li>`--watch` 是否开启监听, 文件改动后自动再次执行构建</li><li>`--env=dev` 指定构建的环境</li></ul>例如:<ul><li>`npm run build:css -- --env=dev`</li></ul>  |
 | npm run build:js    | 构建 JS     | 支持的参数同 `build:css`   |
 | npm run build:res   | 构建其他静态资源     |  支持的参数同 `build:css`    |
 | npm run build:clean | 清理构建的结果    |      |
-| npm run deploy      | 部署(FTP 上传)静态资源    | 支持参数: <br>`--env=dev` 指定部署的环境;<br>`--deploy.` 覆盖 `build-config.js` 中 `task.deploy.env` 定义的各个环境配置;<br> `--deploy.__deploy_files__` 需要部署的文件(支持 glob), 以 `build-config.js` 中定义的 `dist` 目录为根目录, 默认部署 `dist` 目录下面的所有文件, 如果要配置某个文件夹需要部署, 注意以 `/**` 结尾; <br>`--deploy.__ftp_base_path__` FTP 的基准目录, 如果只配置了 `__ftp_base_path__`, 则自动追加项目的名称作为 FTP 上传到的目录;<br>`--deploy.__ftp_path__` 直接指定 FTP 上传到的目录;<br>`--deploy.__incremental__` 是否使用增量上传功能(默认为 `false`), 只上传修改过的文件;<br>例如:<br>将某个文件夹部署到 `test` 环境 `npm run deploy -- --env=test --deploy.__deploy_files__=/path/to/dir/** --deploy.__ftp_password__=test`;<br>将某个文件部署到 `prod` 环境 `npm run deploy -- --deploy.__deploy_files__=/path/to/file.ext`;<br>直接指定 FTP 上传的根目录 `npm run deploy -- --deploy.__ftp_path__=/ftp/path`;<br>使用增量上传功能 `npm run deploy -- --deploy.__incremental__=true`   |
+| npm run deploy      | 部署(FTP 上传)静态资源    | 支持参数: <ul><li>`--env=dev` 指定部署的环境</li><li>`--deploy.` 覆盖 `build-config.js` 中 `task.deploy.env` 定义的各个环境配置</li><li>`--deploy.__deploy_files__` 需要部署的文件(支持 glob), 以 `build-config.js` 中定义的 `dist` 目录为根目录, 默认部署 `dist` 目录下面的所有文件, 如果要配置某个文件夹需要部署, 注意以 `/**` 结尾</li><li>`--deploy.__ftp_base_path__` FTP 的基准目录, 如果只配置了 `__ftp_base_path__`, 则自动追加项目的名称作为 FTP 上传到的目录</li><li>`--deploy.__ftp_path__` 直接指定 FTP 上传到的目录</li><li>`--deploy.__incremental__` 是否使用增量上传功能(默认为 `false`), 只上传修改过的文件</li></ul>例如:<ul><li>将某个文件夹部署到 `test` 环境 `npm run deploy -- --env=test --deploy.__deploy_files__=/path/to/dir/** --deploy.__ftp_password__=test`</li><li>将某个文件部署到 `prod` 环境 `npm run deploy -- --deploy.__deploy_files__=/path/to/file.ext`</li><li>直接指定 FTP 上传的根目录 `npm run deploy -- --deploy.__ftp_path__=/ftp/path`</li><li>使用增量上传功能 `npm run deploy -- --deploy.__incremental__=true`</li></ul>   |
 
 构建环境的差别, 默认为正式环境
 * dev (开发环境)不会压缩 CSS/JS 文件, 会产生 CSS/JS 的 sourcemap 便于调试
