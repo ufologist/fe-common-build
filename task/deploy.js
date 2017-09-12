@@ -77,6 +77,9 @@ function prepareInfo(buildConfig, deployEnv) {
         deployEnv.__ftp_path__ = endsWithForwardSlash(deployEnv.__ftp_base_path__) + getProjectName();
     }
 
+    // 是否增量上传
+    deployEnv.__incremental__ = deployEnv.__incremental__ ? deployEnv.__incremental__.toString() == 'true' : false;
+
     console.info('准备部署到 ' + chalk.yellow.bold(buildConfig.env) + ' 环境');
     console.info('------------------------------');
     console.info(JSON.stringify(deployEnv, null, 4));
@@ -91,7 +94,7 @@ function prepareInfo(buildConfig, deployEnv) {
 
     console.info('共计 [' + chalk.yellow.bold(deployFileCount) + '] 个文件');
     if (deployFileCount > 0) {
-        console.info('会 FTP 上传文件到 ' + chalk.yellow.bold(deployEnv.__ftp_host__) + ' 服务器的 ' + chalk.yellow.bold(deployEnv.__ftp_path__) + ' 目录');
+        console.info('会 FTP ' + (deployEnv.__incremental__ ? '增量上传' : '上传') + '文件到 ' + chalk.yellow.bold(deployEnv.__ftp_host__) + ' 服务器的 ' + chalk.yellow.bold(deployEnv.__ftp_path__) + ' 目录');
         console.info('------------------------------');
     }
 }
@@ -163,7 +166,8 @@ module.exports = function(gulp, buildConfig) {
                         base: buildConfig.dist,
                         nodir: true,
                         buffer: false
-                    }).pipe(gulpIf(deployEnv.__incremental__, conn.newerOrDifferentSize(deployEnv.__ftp_path__))).pipe(conn.dest(deployEnv.__ftp_path__).on('end', function() {
+                    }).pipe(gulpIf(deployEnv.__incremental__, conn.newerOrDifferentSize(deployEnv.__ftp_path__)))
+                      .pipe(conn.dest(deployEnv.__ftp_path__).on('end', function() {
                            console.info('------------------------------');
                            gulpUtil.log('部署完成: ' + '需要上传 [' + chalk.yellow.bold(deployFileCount) + '] 个文件' + ', 上传完成 [' + chalk.yellow.bold(uploadedCount) + '] 个文件, 耗时: ' + (Date.now() - startUploadTime) / 1000 + 's');
 
