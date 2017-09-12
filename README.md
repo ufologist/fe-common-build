@@ -59,7 +59,7 @@
 * 开发完成时 `npm run build` 执行正式构建
 * 正式上线时 `npm run deploy` 部署静态资源(FTP 上传静态资源)
 
-## 构建命令
+## 构建命令[示例](https://github.com/ufologist/fe-common-build/blob/master/task/README.md)
 
 | 命令                | 作用 | 说明 |
 |---------------------|------|------|
