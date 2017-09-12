@@ -1,5 +1,18 @@
 # CHANGELOG
 
+* v0.5.0 2017-9-12
+
+  * [feat] 可以给 `webpack.DefinePlugin` 配置变量定义了, 对应 `build-config.js` 中的 `task.js.definitions`
+  * [feat] 实现新的 `gulp deploy` 任务, 使用 FTP 上传静态资源文件
+    * 支持多环境配置
+      * test/prod/... 默认为 prod
+    * 支持 `ftp_base_path` / `ftp_path` 两种方式来定义上传到 FTP 的哪个目录
+    * 符合默认的 FTP 目录规范
+      * 自动读取项目名称作为 FTP 上传的根目录
+    * 上传时需要二次确认, 避免误操作
+    * 支持 glob 方式选择文件或者文件夹上传
+    * 支持 ignore 配置过滤要上传的文件
+
 * v0.4.0 2017-9-4
 
   使用 glob 自己来配置好 webpack 的 entry, 避免 webpack-stream 在取 named 的时候会将 entry 变成数组, 造成打包后的文件即使没有内容更新, 也会生成不一样的内容(因为有一个模块 ID 每次都不一样)

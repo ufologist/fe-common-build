@@ -69,6 +69,27 @@ function getEntries(buildConfig) {
     return entry;
 }
 
+/**
+ * 将环境配置都放到 DefinePlugin 中, 方便在 JS 中使用
+ */
+function getDefinePlugin(buildConfig) {
+    var definitionsObj = buildConfig.task.js.definitions ? buildConfig.task.js.definitions[buildConfig.env] : {};
+
+    var definitions = {};
+    for (var key in definitionsObj) {
+        definitions[key] = JSON.stringify(definitionsObj[key]);
+    }
+
+    if (buildConfig.env != 'dev') {
+        // 一般约定的优化
+        definitions['process.env'] = {
+            NODE_ENV: '"production"'
+        }
+    }
+
+    return new webpack.DefinePlugin(definitions);
+}
+
 module.exports = function(gulp, buildConfig) {
     var webpackConfig = {};
     var baseWebpackConfig = {
@@ -91,6 +112,7 @@ module.exports = function(gulp, buildConfig) {
             }]
         },
         plugins: [
+            getDefinePlugin(buildConfig),
             // 不使用默认的数字来作为模块ID, 通过 hash 的方式产生稳定的模块ID
             new webpack.HashedModuleIdsPlugin()
         ],

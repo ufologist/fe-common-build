@@ -10,6 +10,7 @@
     "build:js": "gulp js",
     "build:res": "gulp res",
     "build:clean": "gulp clean",
+    "deploy": "gulp deploy",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "devDependencies": {

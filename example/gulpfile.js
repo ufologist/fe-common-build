@@ -3,4 +3,5 @@
 // * js
 // * res
 // * clean
+// * deploy
 require('fe-common-build');
