@@ -3,16 +3,7 @@
 * v0.5.0 2017-9-12
 
   * [feat] 可以给 `webpack.DefinePlugin` 配置变量定义了, 对应 `build-config.js` 中的 `task.js.definitions`
-  * [feat] 实现新的 `gulp deploy` 任务, 使用 FTP 上传静态资源文件
-    * 支持多环境配置
-      * test/prod/... 默认为 prod
-    * 支持 `ftp_base_path` / `ftp_path` 两种方式来定义上传到 FTP 的哪个目录
-    * 符合默认的 FTP 目录规范
-      * 自动读取项目名称作为 FTP 上传的根目录
-    * 上传前给与清晰的提示信息, 上传时需要二次确认, 避免误操作
-    * 支持 glob 方式选择文件或者文件夹上传
-    * 支持 ignore 配置过滤要上传的文件
-    * 支持增量上传
+  * [feat] 实现新的 `gulp deploy` 任务, 使用 [FTP 上传静态资源文件](https://github.com/ufologist/fe-common-build/blob/master/task/deploy.md)
 
 * v0.4.0 2017-9-4
 
