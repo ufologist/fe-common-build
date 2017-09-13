@@ -169,7 +169,7 @@ module.exports = function(gulp, buildConfig) {
                     }).pipe(gulpIf(deployEnv.__incremental__, conn.newerOrDifferentSize(deployEnv.__ftp_path__)))
                       .pipe(conn.dest(deployEnv.__ftp_path__).on('end', function() {
                            console.info('------------------------------');
-                           gulpUtil.log('部署完成: ' + '需要上传 [' + chalk.yellow.bold(deployFileCount) + '] 个文件' + ', 上传完成 [' + chalk.yellow.bold(uploadedCount) + '] 个文件, 耗时: ' + (Date.now() - startUploadTime) / 1000 + 's');
+                           gulpUtil.log('部署完成: ' + '需要上传 [' + chalk.yellow.bold(deployFileCount) + '] 个文件' + ', 上传了 [' + chalk.yellow.bold(uploadedCount) + '] 个文件, 耗时: ' + (Date.now() - startUploadTime) / 1000 + 's');
 
                            done();
                     }));

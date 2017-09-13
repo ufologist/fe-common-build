@@ -11,3 +11,5 @@
 ## `npm run deploy`
 
 ![npm-run-deploy](https://github.com/ufologist/fe-common-build/blob/master/snapshoot/npm-run-deploy.png?raw=true)
+
+[更多 deploy 示例](https://github.com/ufologist/fe-common-build/blob/master/task/deploy.md)
