@@ -77,9 +77,6 @@ function prepareInfo(buildConfig, deployEnv) {
         deployEnv.__ftp_path__ = endsWithForwardSlash(deployEnv.__ftp_base_path__) + getProjectName();
     }
 
-    // 是否增量上传
-    deployEnv.__incremental__ = deployEnv.__incremental__ ? deployEnv.__incremental__.toString() == 'true' : false;
-
     console.info('准备部署到 ' + chalk.yellow.bold(buildConfig.env) + ' 环境');
     console.info('------------------------------');
     console.info(JSON.stringify(deployEnv, null, 4));

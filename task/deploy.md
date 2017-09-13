@@ -35,6 +35,6 @@
 * 直接指定 FTP 上传到的目录 `npm run deploy -- --deploy.__ftp_path__=/ftp/path/dir/a/b/c`
 
   ![deploy-ftp-path](https://github.com/ufologist/fe-common-build/blob/master/snapshoot/deploy-ftp-path.png?raw=true)
-* 增量上传 `npm run deploy -- --deploy.__incremental__=true`
+* 增量上传 `npm run deploy -- --deploy.__incremental__`
 
   ![deploy-incremental](https://github.com/ufologist/fe-common-build/blob/master/snapshoot/deploy-incremental.png?raw=true)

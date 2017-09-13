@@ -17,7 +17,7 @@ var defaultIgnore = [
 ];
 // 部署的默认路径是 '../src/main/webapp/resources'
 // 因此排除时, 需要将路径最前面修改为: '!../'
-var deployDefaultIgnore = defaultIgnore.map(function(pattern) {
+var defaultDeployIgnore = defaultIgnore.map(function(pattern) {
     return pattern.replace('!./', '!../');
 });
 
@@ -93,7 +93,7 @@ var config = {
                     // 例如: /path/to/dir/**
                     __deploy_files__: defaultDeployFiles,
                     // 从需要部署的文件中排除掉一些文件(支持 glob)
-                    __ignore_files__: deployDefaultIgnore,
+                    __ignore_files__: defaultDeployIgnore,
 
                     // 是否使用增量上传功能, 只上传修改过的文件
                     // 增量更新的实现手段:
@@ -116,7 +116,7 @@ var config = {
                 },
                 prod: { // 正式环境的部署配置
                     __deploy_files__: defaultDeployFiles,
-                    __ignore_files__: deployDefaultIgnore,
+                    __ignore_files__: defaultDeployIgnore,
 
                     __incremental__: false,
 
