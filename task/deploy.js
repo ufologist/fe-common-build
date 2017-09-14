@@ -4,6 +4,7 @@ var fs = require('fs');
 var argv = require('yargs').argv;
 var glob = require('glob');
 var chalk = require('chalk');
+var highlight = chalk.yellow.bold;
 var merge = require('merge');
 // https://github.com/Freyskeyd/gulp-prompt
 // https://github.com/anseki/gulp-confirm
@@ -37,9 +38,10 @@ function endsWithForwardSlash(string) {
 function ftpLog(mode, extra, buildConfig, deployEnv) {
     // 单个文件上传完成后提示
     if (mode.trim() == 'UP') {
+        var percentRegExp = /(\d+)%/;
         // UP    100% /path/to/file.ext
-        var progress = extra.match(/(\d+)%/);
-        var remotPath = extra.replace(/(\d+)%/, '').trim();
+        var progress = extra.match(percentRegExp);
+        var remotPath = extra.replace(percentRegExp, '').trim();
         if (progress && progress[1] == '100') {
             uploadedCount = uploadedCount + 1;
 
@@ -77,21 +79,21 @@ function prepareInfo(buildConfig, deployEnv) {
         deployEnv.__ftp_path__ = endsWithForwardSlash(deployEnv.__ftp_base_path__) + getProjectName();
     }
 
-    console.info('准备部署到 ' + chalk.yellow.bold(buildConfig.env) + ' 环境');
+    console.info('准备部署到 ' + highlight(buildConfig.env) + ' 环境');
     console.info('------------------------------');
     console.info(JSON.stringify(deployEnv, null, 4));
     console.info('------------------------------');
 
-    console.info('需要部署的文件', chalk.yellow.bold(path.resolve(deployEnv.__deploy_files__)));
+    console.info('需要部署的文件', highlight(path.resolve(deployEnv.__deploy_files__)));
     if (deployFileCount <= 20) {
         deployFiles.forEach(function(file, index) {
             console.info((index + 1) + ') ' +  file);
         });
     }
 
-    console.info('共计 [' + chalk.yellow.bold(deployFileCount) + '] 个文件');
+    console.info('共计 [' + highlight(deployFileCount) + '] 个文件');
     if (deployFileCount > 0) {
-        console.info('会 FTP ' + (deployEnv.__incremental__ ? '增量上传' : '上传') + '文件到 ' + chalk.yellow.bold(deployEnv.__ftp_host__) + ' 服务器的 ' + chalk.yellow.bold(deployEnv.__ftp_path__) + ' 目录');
+        console.info('会 FTP ' + (deployEnv.__incremental__ ? '增量' : '') + '上传文件到 ' + highlight(deployEnv.__ftp_host__) + ' 服务器的 ' + highlight(deployEnv.__ftp_path__) + ' 目录');
         console.info('------------------------------');
     }
 }
@@ -131,7 +133,7 @@ module.exports = function(gulp, buildConfig) {
         if (deployFileCount <= 0) {
             console.info('------------------------------');
             console.info('由于没有需要部署的文件, 将直接结束任务');
-            console.info('请检查 ' + chalk.yellow.bold('__deploy_files__') + ' 的配置是否正确, 如果要部署某个文件夹, 请以 ' + chalk.yellow.bold('/**') + ' 结尾');
+            console.info('请检查 ' + highlight('__deploy_files__') + ' 的配置是否正确, 如果要部署某个文件夹, 请以 ' + highlight('/**') + ' 结尾');
             console.info('------------------------------');
             done();
             return;
@@ -166,7 +168,7 @@ module.exports = function(gulp, buildConfig) {
                     }).pipe(gulpIf(deployEnv.__incremental__, conn.newerOrDifferentSize(deployEnv.__ftp_path__)))
                       .pipe(conn.dest(deployEnv.__ftp_path__).on('end', function() {
                            console.info('------------------------------');
-                           gulpUtil.log('部署完成: ' + '需要上传 [' + chalk.yellow.bold(deployFileCount) + '] 个文件' + ', 上传了 [' + chalk.yellow.bold(uploadedCount) + '] 个文件, 耗时: ' + (Date.now() - startUploadTime) / 1000 + 's');
+                           gulpUtil.log('部署完成: ' + '共计 [' + highlight(deployFileCount) + '] 个文件' + ', 上传了 [' + highlight(uploadedCount) + '] 个文件, 耗时: ' + (Date.now() - startUploadTime) / 1000 + 's');
 
                            done();
                     }));
