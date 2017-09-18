@@ -106,6 +106,7 @@ var config = {
                     // ftp 相关配置
                     __ftp_host__: 'ftptest.yourdomain.com',
                     __ftp_port__: 21,
+                    // 如果这里不配置 ftp 的用户名和密码, 可以在命令行传入参数, 或者在控制台中提示输入
                     __ftp_user__: 'test',
                     __ftp_password__: 'testpassword',
                     // FTP 的基准目录
