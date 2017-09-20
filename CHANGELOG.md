@@ -1,5 +1,9 @@
 # CHANGELOG
 
+* v0.5.1 2017-9-20
+
+  去掉默认配置中的 FTP 用户名和密码, 否则其他项目在使用时如果没有覆盖这个配置, 就会使用默认的用户名和密码, 造成 FTP 上传失败的疑惑(我没有配置用户名和密码啊, 为什么没有提示我输入?)
+
 * v0.5.0 2017-9-12
 
   * [feat] 可以给 `webpack.DefinePlugin` 配置变量定义了, 对应 `build-config.js` 中的 `task.js.definitions`

@@ -107,8 +107,8 @@ var config = {
                     __ftp_host__: 'ftptest.yourdomain.com',
                     __ftp_port__: 21,
                     // 如果这里不配置 ftp 的用户名和密码, 可以在命令行传入参数, 或者在控制台中提示输入
-                    __ftp_user__: 'test',
-                    __ftp_password__: 'testpassword',
+                    __ftp_user__: '',
+                    __ftp_password__: '',
                     // FTP 的基准目录
                     // 如果只配置了 __ftp_base_path__, 则自动追加项目的名称作为 FTP 上传到的目录
                     __ftp_base_path__: '/ftp/base/path/',
@@ -123,8 +123,8 @@ var config = {
 
                     __ftp_host__: 'ftp.yourdomain.com',
                     __ftp_port__: 21,
-                    __ftp_user__: 'user',
-                    __ftp_password__: 'userpassword',
+                    __ftp_user__: '',
+                    __ftp_password__: '',
                     __ftp_base_path__: '/ftp/base/path/',
                     // __ftp_path__: '/ftp/path/'
                 }
