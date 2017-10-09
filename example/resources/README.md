@@ -34,8 +34,8 @@ example/
 ```
 
 模块说明
-* 入口模块: 在页面中通过 `<link>`/`<script>` 方式直接引用的模块, 以非 `_` (下划线)开头的 SCSS/JS 文件, 会打包构建
-* 子模块: 在入口模版中引用的模块, 以 `_` (下划线)开头的 SCSS/JS 文件, 不会单独打包
+* 入口模块: 在页面中通过 `<link>`/`<script>` 方式直接引用的模块, 以非 `_` (下划线)开头的 SCSS/LESS/JS 文件, 会打包构建
+* 子模块: 在入口模版中引用的模块, 以 `_` (下划线)开头的 SCSS/LESS/JS 文件, 不会单独打包
 
 ## 基于 sourcemap 来调试
 
@@ -43,12 +43,16 @@ example/
 
 ![debug-sourcemap-js](https://raw.githubusercontent.com/ufologist/fe-common-build/master/example/resources/index/res/debug-sourcemap-js.png)
 
-调试 SCSS
+调试 SCSS/LESS
 
 ![debug-sourcemap-scss](https://raw.githubusercontent.com/ufologist/fe-common-build/master/example/resources/index/res/debug-sourcemap-scss.png)
 
-## 关于多级 SASS 资源引用的问题
+## 关于多层级 SASS 资源引用的问题
 
-由于 SASS 对于使用 `@import` 进来的 SASS 文件没有重写其他中的资源引用, 即重写 `url()` 引用的路径.
+由于 SASS 对于使用 `@import` 进来的 SASS 文件没有重写其中的资源引用, 即重写 `url()` 引用的路径.
 
 为了规避这个问题, **有资源引用的 SASS 文件, 都统一放置在与入口模块同级的目录**, 因此可以这样放置模块的 scss 文件: `业务/功能模块/模块.scss`, 而不能这样放置: `业务/功能模块/模块/模块.scss`
+
+## 推荐使用 less 来避免 SASS 多层级资源引用的问题
+
+因为相比 `sass`, `less` 有 [Relative URLs](http://lesscss.org/usage/#command-line-usage-relative-urls) 就可以更灵活地组织文件, 适合组件化的开发, 避免嵌套引用时出现文件路径出错的问题

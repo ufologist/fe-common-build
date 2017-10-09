@@ -1,0 +1,14 @@
+// 各个模块保持单一职责
+// 样式控制在一个父类中, 采用 BEM 规范来命名
+.mod3 {
+    color: #333;
+
+    &__element {
+        padding: 16px;
+        background-image: url(res/mod2/mod2.png);
+    }
+
+    &--active {
+        color: #ccbbdd;
+    }
+}
