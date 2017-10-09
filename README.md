@@ -38,7 +38,7 @@
 * 清理构建结果
 
 再着手实现构建方案的具体功能, 我们选用成熟的技术方案
-* 构建 CSS: sass + postcss -> 通用的模块化方案
+* 构建 CSS: sass/less + postcss -> 通用的模块化方案
 * 构建 JS: webpack + es2015 -> 标准的模块化方案
 * 构建其他静态资源: copy + imagemin -> 通用的资源优化方案
 
@@ -78,15 +78,15 @@
 ## 构建规则
 
 * 所有 JS 尽量使用 [ES2015](http://babeljs.io/learn-es2015/) 来编写
-* 所有 CSS 使用 [SCSS](http://sass-lang.com/guide) 来编写, 遵循 [BEM](http://getbem.com/naming/) 命名规范
-* **不需要打包输出的 SCSS/JS 文件就以 `_` (下划线)开头**
+* 所有 CSS 使用 [scss](http://sass-lang.com/guide) 或者 [less](http://lesscss.org) 来编写, 遵循 [BEM](http://getbem.com/naming/) 命名规范
+* **不需要打包输出的 scss/less/js 文件就以 `_` (下划线)开头**
 
 ## 构建结果
 
-* 将所有非 `_` (下划线) 开头的 JS 文件视为入口, 进行打包
+* 将所有非 `_` (下划线) 开头的 js 文件视为入口, 进行打包
   * 编译 ES2015 -> ES5
-* 将所有非 `_` (下划线) 开头的 SCSS 文件进行打包
-  * SCSS -> CSS
+* 将所有非 `_` (下划线) 开头的 scss/less 文件进行打包
+  * scss/less -> css
   * autoprefixer
 * 将所有图片进行优化
   * imagemin

@@ -2,6 +2,7 @@
 
 var argv = require('yargs').argv;
 var imagemin = require('gulp-imagemin');
+var LessPluginCleanCSS = require('less-plugin-clean-css');
 
 // 使用 gulp.src 排除文件时, 需要跟 src 中的路径最前面匹配
 // 例如 gulp.src('./resources/**/*.scss') 这里的路径最前面是: './'
@@ -27,9 +28,9 @@ var defaultDeployFiles = '/**';
 var config = {
     // 需要构建的文件
     src: {
-        css: ['./resources/**/*.scss'],
+        css: ['./resources/**/*.@(scss|less)'],
         js: ['./resources/**/[^_]*.js'],
-        res: ['./resources/**/*.!(scss|js)']
+        res: ['./resources/**/*.!(scss|less|js)']
     },
     // 构建忽略的文件
     // [Globtester](http://www.globtester.com/)
@@ -50,6 +51,12 @@ var config = {
     task: {
         css: {
             sass: {},
+            less: {
+                relativeUrls: true,
+                plugins: [
+                    new LessPluginCleanCSS()
+                ]
+            },
             postcss: {
                 plugins: [
                     require('autoprefixer')({

@@ -1,5 +1,10 @@
 # CHANGELOG
 
+* v0.6.0 2017-10-9
+
+  * [feat] 增加了构建 `less` 的功能, 并推荐使用 `less` 作为 `css` 的 `pre-processor`
+    * 因为相比 `sass`, 有 [Relative URLs](http://lesscss.org/usage/#command-line-usage-relative-urls) 就可以更灵活地组织文件, 适合组件化的开发, 避免嵌套引用时出现文件路径出错的问题
+
 * v0.5.2 2017-9-28
 
   统一封装 npm scripts 要执行的命令
