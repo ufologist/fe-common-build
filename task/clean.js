@@ -1,4 +1,5 @@
 var fs = require('fs');
+var path = require('path');
 
 var del = require('del');
 
@@ -14,20 +15,19 @@ module.exports = function(gulp, buildConfig) {
         });
         gulpUtil.log('删除输出目录根目录下的所有文件:\n', delFiles.join('\n'));
 
-        // 删除输出目录根目录中, 在 src 中管理的目录
-        var distSrcRootDirs = [];
-        var srcRootFiles = fs.readdirSync(buildConfig.base);
-        srcRootFiles.forEach(function(filename) {
-            var filePath = buildConfig.base + '/' + filename;
-            var stat = fs.statSync(filePath);
+        // 删除输出目录根目录中, 在 srcBase 静态资源目录中管理的目录
+        var distRootDirs = [];
+        var srcRootDirs = fs.readdirSync(buildConfig.srcBase);
+        srcRootDirs.forEach(function(dirName) {
+            var stat = fs.statSync(path.resolve(buildConfig.srcBase, dirName));
             if (stat.isDirectory()) {
-                distSrcRootDirs.push(buildConfig.dist + '/' + filename);
+                distRootDirs.push(path.resolve(buildConfig.dist, dirName));
             }
         });
-        var delDirs = del.sync(distSrcRootDirs, {
+        var delDirs = del.sync(distRootDirs, {
             force: true
         });
-        gulpUtil.log('删除输出目录根目录中, 在 src 中有的目录:\n', delDirs.join('\n'));
+        gulpUtil.log('删除输出目录根目录中, 在 srcBase 中有的目录:\n', delDirs.join('\n'));
 
         done();
     });
