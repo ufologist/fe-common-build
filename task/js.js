@@ -48,22 +48,19 @@ function getEntries(buildConfig) {
     // 找出所有符合条件的 JS 文件
     var filenames = buildConfig.src.js.reduce(function(prev, pattern) {
         return prev.concat(glob.sync(pattern, {
+            cwd: buildConfig.srcBase,
             nodir: true
         }));
     }, []);
 
     // 将 JS 文件映射为 webpack 的 entry 配置项
     filenames.forEach(function(filename) {
-        var filePath = path.resolve(filename);
-
         // 将 JS 文件转成按照相对根目录的入口文件
-        // 例如 e:/project 是根目录
-        // e:/project/a/b/c.js -> ./a/b/c
-        // 即替换成相对目录, 并去掉 js 后缀
-        var fileRootPath = path.resolve(buildConfig.base);
-        var entryName = filePath.replace(fileRootPath, '.').replace(/\.js$/, '');
-
-        entry[entryName] = filePath;
+        // a/b/c.js -> a/b/c
+        // XXX 其实为了省事, 可以直接将 entryName 设置为 a/b/c.js,
+        // 然后设置 output.filename 为 '[name]'
+        var entryName = filename.substring(0, filename.lastIndexOf('.'));
+        entry[entryName] = path.resolve(buildConfig.srcBase, filename);
     });
 
     return entry;
@@ -82,9 +79,8 @@ function getDefinePlugin(buildConfig) {
 
     if (buildConfig.env != 'dev') {
         // 一般约定的优化
-        definitions['process.env'] = {
-            NODE_ENV: '"production"'
-        }
+        process.env.NODE_ENV = 'production';
+        definitions['process.env.NODE_ENV'] = JSON.stringify(process.env.NODE_ENV);
     }
 
     return new webpack.DefinePlugin(definitions);
@@ -93,6 +89,7 @@ function getDefinePlugin(buildConfig) {
 module.exports = function(gulp, buildConfig) {
     var webpackConfig = {};
     var baseWebpackConfig = {
+        context: path.resolve(buildConfig.srcBase),
         entry: getEntries(buildConfig),
         output: {
             filename: '[name].js'
@@ -131,7 +128,10 @@ module.exports = function(gulp, buildConfig) {
 
     // 构建 JS: webpack + es2015
     gulp.task('js', function() {
-        return gulp.src(buildConfig.src.js)
+        return gulp.src(buildConfig.src.js, {
+                        cwd: buildConfig.srcBase,
+                        base: buildConfig.srcBase
+                    })
                    .pipe(gulpIf(buildConfig.env == 'dev', plumber({ // 正式构建时, 不捕获异常才能让 npm-run-all 终止运行, 以提示构建失败
                        errorHandler: function(error) {
                            gulpUtil.beep();
