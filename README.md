@@ -68,7 +68,7 @@
 | npm run build:css   | 构建 CSS     | 支持参数: <ul><li>`--watch` 是否开启监听, 文件改动后自动再次执行构建</li><li>`--env=dev` 指定构建的环境</li></ul>例如:<ul><li>`npm run build:css -- --env=dev`</li></ul>  |
 | npm run build:js    | 构建 JS     | 支持的参数同 `build:css`   |
 | npm run build:res   | 构建其他静态资源     |  支持的参数同 `build:css`    |
-| npm run build:clean | 清理构建的结果    |      |
+| npm run clean       | 清理构建的结果    |      |
 | npm run deploy      | 部署(FTP 上传)静态资源    | 支持参数: <ul><li>`--env=dev` 指定部署的环境</li><li>`--deploy.` 覆盖 `build-config.js` 中 `task.deploy.env` 定义的各个环境配置</li><li>`--deploy.__deploy_files__` 需要部署的文件(支持 glob), 以 `build-config.js` 中定义的 `dist` 目录为根目录, 默认部署 `dist` 目录下面的所有文件, 如果要配置某个文件夹需要部署, 注意以 `/**` 结尾</li><li>`--deploy.__ftp_base_path__` FTP 的基准目录, 如果只配置了 `__ftp_base_path__`, 则自动追加项目的名称作为 FTP 上传到的目录</li><li>`--deploy.__ftp_path__` 直接指定 FTP 上传到的目录</li><li>`--deploy.__incremental__` 是否使用增量上传功能(默认为 `false`), 只上传修改过的文件</li></ul>例如:<ul><li>将某个文件夹部署到 `test` 环境 `npm run deploy -- --env=test --deploy.__deploy_files__=/path/to/dir/** --deploy.__ftp_password__=test`</li><li>将某个文件部署到 `prod` 环境 `npm run deploy -- --deploy.__deploy_files__=/path/to/file.ext`</li><li>直接指定 FTP 上传到的目录 `npm run deploy -- --deploy.__ftp_path__=/ftp/path`</li><li>使用增量上传功能 `npm run deploy -- --deploy.__incremental__`</li></ul>   |
 
 构建环境的差别, 默认为正式环境
@@ -79,7 +79,8 @@
 
 * 所有 JS 尽量使用 [ES2015](http://babeljs.io/learn-es2015/) 来编写
 * 所有 CSS 使用 [scss](http://sass-lang.com/guide) 或者 [less](http://lesscss.org) 来编写, 遵循 [BEM](http://getbem.com/naming/) 命名规范
-* **不需要打包输出的 scss/less/js 文件就以 `_` (下划线)开头**
+* **仅作为引用的模块, 不需要单独输出到 `dist` 目录的 scss/less/js 文件就以 `_` (下划线)开头**
+* **不需要构建的 js 文件就以 `__`(两个下划线)开头, 会原封不动的复制一份到 `dist` 目录**
 
 ## 构建结果
 
@@ -103,9 +104,9 @@
 * `babel-preset-es2015` 会给每个模块添加 `"use strict";` 启用 ECMAScript 5 Strict Mode(ES5严格模式)
 
   因此注意不要写违法[严格模式](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Strict_mode)的代码, 例如不使用 `var` 来声明变量, 让该变量**被提升为一个全局变量**. 启用严格模式可以让我们写出更规范的代码.
-* 如果新增了需要打包的文件, 需要重启构建任务
+* 如果新增了需要打包的 `js` 文件, 需要重启构建任务
 
-  例如: 新增了一个 `foo.js`, 构建任务不会识别到这个新增的文件, 必须重启构建任务
+  例如: 新增了一个 `foo.js`, 构建任务不会识别到这个新增的入口文件, 必须重启构建任务
 
 ## 参考
 

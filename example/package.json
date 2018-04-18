@@ -4,13 +4,13 @@
   "description": "前端工程化之通用构建方案",
   "main": "gulpfile.js",
   "scripts": {
-    "dev": "fe-common-build dev",
     "build": "fe-common-build build",
+    "clean": "fe-common-build clean",
+    "deploy": "fe-common-build deploy",
+    "dev": "fe-common-build dev",
     "build:css": "fe-common-build build:css",
     "build:js": "fe-common-build build:js",
     "build:res": "fe-common-build build:res",
-    "build:clean": "fe-common-build build:clean",
-    "deploy": "fe-common-build deploy",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "devDependencies": {

@@ -4,11 +4,6 @@ var argv = require('yargs').argv;
 var imagemin = require('gulp-imagemin');
 var LessPluginCleanCSS = require('less-plugin-clean-css');
 
-// 使用 gulp.src 排除文件时, 需要跟 src 中的路径最前面匹配
-// 例如 gulp.src('./resources/**/*.scss') 这里的路径最前面是: './'
-// 需要排除时, 应该配置为 '!./**/package.json'
-// 如果是 gulp.src('../resources/**/*.scss') 路径最前面就是: '../'
-// 需要排除时, 应该配置为 '!../**/package.json'
 var defaultIgnore = [
     '!**/package.json',
     '!**/gulpfile.js',
@@ -16,15 +11,7 @@ var defaultIgnore = [
     '!**/*.map',
     '!**/*.md'
 ];
-// 部署的默认路径是 '../src/main/webapp/resources'
-// 因此排除时, 需要将路径最前面修改为: '!../'
-// var defaultDeployIgnore = defaultIgnore.map(function(pattern) {
-//     return pattern.replace('!./', '!../');
-// });
 
-var defaultDeployIgnore = defaultIgnore;
-
-var defaultDist = '../src/main/webapp/resources';
 var defaultDeployFiles = '/**';
 
 var config = {
@@ -36,7 +23,7 @@ var config = {
     src: {
         css: ['**/*.@(scss|less)'],
         js: ['**/[^_]*.js'],
-        res: ['**/*.!(scss|less|js)']
+        res: ['**/*.!(scss|less|js)', '**/__*.js'] // 针对历史遗留的 JS 文件, 会原封不动的复制过去, 不做构建
     },
 
     // 构建忽略的文件
@@ -44,7 +31,7 @@ var config = {
     ignore: defaultIgnore,
 
     // 构建输出的目录
-    dist: defaultDist,
+    dist: '../src/main/webapp/resources',
 
     // 构建的环境
     env: argv.env ? argv.env : 'prod', // dev 开发环境, test 测试环境, stage 预发布环境, prod 正式环境
@@ -104,7 +91,7 @@ var config = {
                     // 例如: /path/to/dir/**
                     __deploy_files__: defaultDeployFiles,
                     // 从需要部署的文件中排除掉一些文件(支持 glob)
-                    __ignore_files__: defaultDeployIgnore,
+                    __ignore_files__: defaultIgnore,
 
                     // 是否使用增量上传功能, 只上传修改过的文件
                     // 增量更新的实现手段:
@@ -128,7 +115,7 @@ var config = {
                 },
                 prod: { // 正式环境的部署配置
                     __deploy_files__: defaultDeployFiles,
-                    __ignore_files__: defaultDeployIgnore,
+                    __ignore_files__: defaultIgnore,
 
                     __incremental__: false,
 

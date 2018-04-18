@@ -9,13 +9,13 @@
 var execSync = require('child_process').execSync;
 
 var npmScript = {
-    'dev': 'npm-run-all --parallel "build:css -- --watch --env=dev" "build:js -- --watch --env=dev" "build:res -- --watch --env=dev"',
     'build': 'npm-run-all build:clean build:css build:js build:res',
+    'clean': 'gulp clean',
+    'deploy': 'gulp deploy',
+    'dev': 'npm-run-all --parallel "build:css -- --watch --env=dev" "build:js -- --watch --env=dev" "build:res -- --watch --env=dev"',
     'build:css': 'gulp css',
     'build:js': 'gulp js',
-    'build:res': 'gulp res',
-    'build:clean': 'gulp clean',
-    'deploy': 'gulp deploy'
+    'build:res': 'gulp res'
 };
 var command = npmScript['dev'];
 

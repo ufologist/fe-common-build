@@ -1,5 +1,9 @@
 # CHANGELOG
 
+* v0.6.1 2018-4-18
+
+  * [refact] 优化了所有构建任务和默认配置, 将 `base` 配置项修改为 `srcBase`, 更加适应在不同需求的项目中使用
+
 * v0.6.0 2017-10-9
 
   * [feat] 增加了构建 `less` 的功能, 并推荐使用 `less` 作为 `css` 的 `pre-processor`
