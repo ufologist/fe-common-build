@@ -7,12 +7,13 @@ module.exports = function(gulp, buildConfig) {
     // 构建其他静态资源: copy + imagemin
     gulp.task('res', function() {
         var piped = gulp.src(buildConfig.src.res.concat(buildConfig.ignore), {
-            base: buildConfig.base
+            cwd: buildConfig.srcBase,
+            base: buildConfig.srcBase
         });
 
         if (buildConfig.watch) {
             piped = piped.pipe(watch(buildConfig.src.res, {
-                base: buildConfig.base
+                cwd: buildConfig.srcBase
             }, function(vinyl) {
                 // gulpUtil.log('watch res', vinyl.path);
             }));
