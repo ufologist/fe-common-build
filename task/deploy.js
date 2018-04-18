@@ -64,8 +64,8 @@ function getProjectName() {
 
 function prepareInfo(buildConfig, deployEnv) {
     // 上传 buildConfig.dist 目录下面的文件
-    deployEnv.__deploy_files__ = buildConfig.dist + deployEnv.__deploy_files__;
     var deployFiles = glob.sync(deployEnv.__deploy_files__, {
+        cwd: buildConfig.dist,
         nodir: true,
         absolute: true,
         ignore: deployEnv.__ignore_files__.map(function(pattern) {
@@ -84,7 +84,7 @@ function prepareInfo(buildConfig, deployEnv) {
     console.info(JSON.stringify(deployEnv, null, 4));
     console.info('------------------------------');
 
-    console.info('需要部署的文件', highlight(path.resolve(deployEnv.__deploy_files__)));
+    console.info('需要部署的文件', highlight(path.resolve(buildConfig.dist, deployEnv.__deploy_files__)));
     if (deployFileCount <= 20) {
         deployFiles.forEach(function(file, index) {
             console.info((index + 1) + ') ' +  file);
@@ -142,7 +142,7 @@ module.exports = function(gulp, buildConfig) {
         inquirer.prompt([{
             type: 'confirm',
             name: 'confirm',
-            message: '确定要部署到 ' + buildConfig.env + ' 环境吗?',
+            message: '确定要部署到 ' + highlight(buildConfig.env) + ' 环境吗?',
             default: false
         }]).then(function(answers) {
             if (answers.confirm) {
@@ -162,6 +162,7 @@ module.exports = function(gulp, buildConfig) {
                     }, buildConfig.task.deploy.options));
 
                     return gulp.src([deployEnv.__deploy_files__].concat(deployEnv.__ignore_files__), {
+                        cwd: buildConfig.dist,
                         base: buildConfig.dist,
                         nodir: true,
                         buffer: false
@@ -171,7 +172,7 @@ module.exports = function(gulp, buildConfig) {
                            gulpUtil.log('部署完成: ' + '共计 [' + highlight(deployFileCount) + '] 个文件' + ', 上传了 [' + highlight(uploadedCount) + '] 个文件, 耗时: ' + (Date.now() - startUploadTime) / 1000 + 's');
 
                            done();
-                    }));
+                        }));
                 });
             } else {
                 done();
