@@ -13,13 +13,14 @@ module.exports = function(gulp, buildConfig) {
     // 构建 CSS: sass/less + postcss
     gulp.task('css:build', function() {
         var scssFilter = filter('**/*.scss', {restore: true});
-        // 构建 less 时只构建下划线开头的文件
+        // 构建 less 时只构建非下划线开头的文件
         var lessFilter = filter('**/[^_]*.less', {restore: true});
         // 最后只输出 css 和 map 文件
         var cssFilter = filter('**/*.@(css|css.map)', {restore: true});
 
         return gulp.src(buildConfig.src.css, {
-                        base: buildConfig.base
+                        cwd: buildConfig.srcBase,
+                        base: buildConfig.srcBase
                     })
                 .pipe(gulpIf(buildConfig.env == 'dev', sourcemaps.init()))
                 // Doesn't compile when importing scss file with underscores
@@ -96,7 +97,9 @@ module.exports = function(gulp, buildConfig) {
 
     if (buildConfig.watch) {
         gulp.task('css', ['css:build'], function() {
-            return gulp.watch(buildConfig.src.css, ['css:build']);
+            return gulp.watch(buildConfig.src.css, {
+                cwd: buildConfig.srcBase
+            }, ['css:build']);
         });
     } else {
         gulp.task('css', ['css:build']);
