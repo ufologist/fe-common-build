@@ -17,11 +17,11 @@ module.exports = function(gulp, buildConfig) {
 
         // 删除输出目录根目录中, 在 srcBase 静态资源目录中管理的目录
         var distRootDirs = [];
-        var srcRootDirs = fs.readdirSync(buildConfig.srcBase);
-        srcRootDirs.forEach(function(dirName) {
-            var stat = fs.statSync(path.resolve(buildConfig.srcBase, dirName));
+        var srcRootFiles = fs.readdirSync(buildConfig.srcBase);
+        srcRootFiles.forEach(function(filename) {
+            var stat = fs.statSync(path.resolve(buildConfig.srcBase, filename));
             if (stat.isDirectory()) {
-                distRootDirs.push(path.resolve(buildConfig.dist, dirName));
+                distRootDirs.push(path.resolve(buildConfig.dist, filename));
             }
         });
         var delDirs = del.sync(distRootDirs, {
