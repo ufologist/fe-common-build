@@ -10,35 +10,39 @@ var LessPluginCleanCSS = require('less-plugin-clean-css');
 // 如果是 gulp.src('../resources/**/*.scss') 路径最前面就是: '../'
 // 需要排除时, 应该配置为 '!../**/package.json'
 var defaultIgnore = [
-    '!./**/package.json',
-    '!./**/gulpfile.js',
-    '!./**/webpack*.js',
-    '!./**/*.map',
-    '!./**/*.md'
+    '!**/package.json',
+    '!**/gulpfile.js',
+    '!**/webpack*.js',
+    '!**/*.map',
+    '!**/*.md'
 ];
 // 部署的默认路径是 '../src/main/webapp/resources'
 // 因此排除时, 需要将路径最前面修改为: '!../'
-var defaultDeployIgnore = defaultIgnore.map(function(pattern) {
-    return pattern.replace('!./', '!../');
-});
+// var defaultDeployIgnore = defaultIgnore.map(function(pattern) {
+//     return pattern.replace('!./', '!../');
+// });
+
+var defaultDeployIgnore = defaultIgnore;
 
 var defaultDist = '../src/main/webapp/resources';
 var defaultDeployFiles = '/**';
 
 var config = {
-    // 需要构建的文件
+    // 构建源文件的 base 路径, 即 gulp.src base, 避免构建的文件输出时套了一层不想要的目录
+    // 例如: 不使用 base, 构建的文件输出到 dist 目录为 dist/resources/a.js
+    //      使用 base, 构建的文件输出到 dist 目录为 dist/a.js
+    srcBase: './resources',
+    // 需要构建的源文件
     src: {
-        css: ['./resources/**/*.@(scss|less)'],
-        js: ['./resources/**/[^_]*.js'],
-        res: ['./resources/**/*.!(scss|less|js)']
+        css: ['**/*.@(scss|less)'],
+        js: ['**/[^_]*.js'],
+        res: ['**/*.!(scss|less|js)']
     },
+
     // 构建忽略的文件
     // [Globtester](http://www.globtester.com/)
     ignore: defaultIgnore,
-    // 构建文件的 base 路径, 即 gulp.src base, 避免构建的文件输出时套了一层不想要的目录
-    // 例如: 不使用 base, 构建的文件输出到 dist 目录为 dist/resources/a.js
-    //      使用 base, 构建的文件输出到 dist 目录为 dist/a.js
-    base: './resources',
+
     // 构建输出的目录
     dist: defaultDist,
 
@@ -53,7 +57,7 @@ var config = {
             sass: {},
             less: {
                 relativeUrls: true,
-                plugins: [
+                plugins: argv.env == 'dev' ? [] : [
                     new LessPluginCleanCSS()
                 ]
             },
