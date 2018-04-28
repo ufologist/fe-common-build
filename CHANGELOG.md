@@ -1,5 +1,9 @@
 # CHANGELOG
 
+* v0.6.3 2018-4-28
+
+  * [refact] 优化图片压缩的插件, 使用 `pngquant` 代替 `optipng`
+
 * v0.6.2 2018-4-18
 
   * [fix] 修改了 `clean` 任务的名字

@@ -2,6 +2,7 @@
 
 var argv = require('yargs').argv;
 var imagemin = require('gulp-imagemin');
+var imageminPngquant = require('imagemin-pngquant');
 var LessPluginCleanCSS = require('less-plugin-clean-css');
 
 var defaultIgnore = [
@@ -23,6 +24,7 @@ var config = {
     src: {
         css: ['**/*.@(scss|less)'],
         js: ['**/[^_]*.js'],
+        pic: ['**/*.@(png|jpg|jpeg|gif|svg)'],
         res: ['**/*.!(scss|less|js)', '**/__*.js'] // 针对历史遗留的 JS 文件, 会原封不动的复制过去, 不做构建
     },
 
@@ -72,9 +74,18 @@ var config = {
         res: {
             imagemin: {
                 plugins: [
-                    imagemin.gifsicle(),
-                    imagemin.jpegtran(),
-                    imagemin.optipng(),
+                    imagemin.gifsicle({
+                        interlaced: false
+                    }),
+                    imagemin.jpegtran({
+                        progressive: true
+                    }),
+                    // optipng 压缩慢压缩效果差, 使用 pngquant 来替代
+                    // imagemin.optipng(),
+                    imageminPngquant({
+                        quality: '75-90',
+                        speed: 4
+                    }),
                     imagemin.svgo()
                 ],
                 options: {}
