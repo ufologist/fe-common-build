@@ -16,9 +16,10 @@ module.exports = function(gulp, buildConfig) {
 
         if (buildConfig.watch) {
             piped = piped.pipe(watch(buildConfig.src.res, {
-                cwd: buildConfig.srcBase
+                cwd: buildConfig.srcBase,
+                base: buildConfig.srcBase
             }, function(vinyl) {
-                // gulpUtil.log('watch res', vinyl.path);
+                gulpUtil.log('watch res', vinyl.path);
             }));
         }
 

@@ -1,5 +1,9 @@
 # CHANGELOG
 
+* v0.6.4 2020-2-24
+
+  * [fix] `res` 任务在 `watch` 模式下没有监听到文件改变
+
 * v0.6.3 2018-4-28
 
   * [refact] 优化图片压缩的插件, 使用 `pngquant` 代替 `optipng`
