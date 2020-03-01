@@ -1,5 +1,9 @@
 # CHANGELOG
 
+* v0.6.7 2020-3-1
+
+  * fix: 升级 `gulp-imagemin-coding-net-vendor` 到 `6.2.1`
+
 * v0.6.6 2020-3-1
 
   * fix: 修改代码中相关依赖包的包名

@@ -1,6 +1,6 @@
 {
   "name": "fe-common-build",
-  "version": "0.6.6",
+  "version": "0.6.7",
   "description": "前端工程化之通用构建方案",
   "main": "gulpfile.js",
   "bin": "./bin/fe-common-build.js",
@@ -34,7 +34,7 @@
     "gulp": "^3.9.1",
     "gulp-filter": "^5.0.1",
     "gulp-if": "^2.0.2",
-    "gulp-imagemin-coding-net-vendor": "^6.2.0",
+    "gulp-imagemin-coding-net-vendor": "^6.2.1",
     "gulp-less": "^3.3.2",
     "gulp-plumber": "^1.1.0",
     "gulp-postcss": "^7.0.0",
