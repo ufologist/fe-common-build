@@ -1,5 +1,9 @@
 # CHANGELOG
 
+* v0.6.5 2020-3-1
+
+  * fix: 由于网络原因使用 `gulp-imagemin` 替换掉 `gulp-imagemin-coding-net-vendor`
+
 * v0.6.4 2020-2-24
 
   * [fix] `res` 任务在 `watch` 模式下没有监听到文件改变
