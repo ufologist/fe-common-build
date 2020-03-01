@@ -1,5 +1,9 @@
 # CHANGELOG
 
+* v0.6.6 2020-3-1
+
+  * fix: 修改代码中相关依赖包的包名
+
 * v0.6.5 2020-3-1
 
   * fix: 由于网络原因使用 `gulp-imagemin` 替换掉 `gulp-imagemin-coding-net-vendor`
