@@ -1,8 +1,8 @@
 // 默认的构建配置
 
 var argv = require('yargs').argv;
-var imagemin = require('gulp-imagemin');
-var imageminPngquant = require('imagemin-pngquant');
+var imagemin = require('gulp-imagemin-coding-net-vendor');
+var imageminPngquant = require('imagemin-pngquant-coding-net-vendor');
 var LessPluginCleanCSS = require('less-plugin-clean-css');
 
 var defaultIgnore = [

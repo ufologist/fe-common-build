@@ -1,5 +1,5 @@
 var watch = require('gulp-watch');
-var imagemin = require('gulp-imagemin');
+var imagemin = require('gulp-imagemin-coding-net-vendor');
 
 var gulpUtil = require('gulp-util');
 // var filter = require('gulp-filter');
